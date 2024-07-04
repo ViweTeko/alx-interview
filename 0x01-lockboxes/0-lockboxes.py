@@ -4,12 +4,15 @@
 
 def canUnlockAll(boxes):
     """This function takes list of lists and content of list unlocks lists"""
-    keys = [0]
-    for key in keys:
-        for boxKey in boxes[key]:
-            if boxKey not in keys and < len(boxes):
-                keys.append(boxKey)
+    # This variable creates set of box(es) being checked
+    checked = set()
+    checked.add(0)
+    stack = [0]
 
-    if len(keys) == len(boxes):
-        return True
-    return False
+    while stack:
+        curr = stack.pop()
+        for key in boxes[curr]:
+            if key < len(boxes) and key not in checked:
+                checked.add(key)
+                stack.append(key)
+    return len(checked) == len(boxes)
