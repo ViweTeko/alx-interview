@@ -22,16 +22,16 @@ try:
             size = int(line_ls[-1])
             if code in cache.keys():
                 cache[code] += 1
-                tot_size += size
-                counter += 1
+            tot_size += size
+            counter += 1
 
-            if counter == 10:
-                counter = 0
-                print(f'File size: {tot_size}')
-                
-                for key, value in sorted(cache.items()):
-                    if value != 0:
-                        print(f'{key}: {value}')
+        if counter == 10:
+            counter = 0
+            print(f'File size: {tot_size}')
+            
+            for key, value in sorted(cache.items()):
+                if value != 0:
+                    print(f'{key}: {value}')
 except Exception as error:
     pass
 finally:
