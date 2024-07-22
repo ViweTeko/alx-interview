@@ -20,4 +20,3 @@ def validUTF8(data) -> bool:
                 return False
         bytes_num -= 1
     return bytes_num == 0
-                
