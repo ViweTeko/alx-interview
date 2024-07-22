@@ -14,28 +14,34 @@ cache = {
 tot_size = 0
 counter = 0
 
-try:
-    for line in stdin:
-        line_ls = line.split(" ")
-        if len(line_ls) > 4:
-            code = line_ls[-2]
-            size = int(line_ls[-1])
-            if code in cache.keys():
-                cache[code] += 1
-            tot_size += size
-            counter += 1
+def prn_stats():
+    """
+    Function that print stats about log
+    """
 
-        if counter == 10:
-            counter = 0
-            print(f'File size: {tot_size}')
-            
-            for key, value in sorted(cache.items()):
-                if value != 0:
-                    print(f'{key}: {value}')
-except Exception as error:
-    pass
-finally:
     print(f'File size: {tot_size}')
-    for key, val in sorted(cache.items()):
-        if val != 0:
-            print(f'{key}: {val}')
+    stcdor = sorted(cache.keys())
+    for each in stcdor:
+        if cache[each] > 0:
+            print(f'{each}: {cache[each]}')
+
+
+if __name__ == "__main__":
+    try:
+        for data in stdin:
+            try:
+                fact = data.split(' ')
+                if fact[-2] in cache:
+                    cache[fact[-2]] += 1
+                tot_size += int(fact[-1])
+            except:
+                pass
+            counter += 1
+            if counter == 10:
+                prn_stats()
+                counter = 0
+    except KeyboardInterrupt:
+        prn_stats()
+        raise
+    else:
+        prn_stats()
