@@ -6,7 +6,7 @@ def validUTF8(data) -> bool:
     """Determines if UTF-8 encoding is valid"""
     bytes_num = 0
     for byte in data:
-        mask 1 << 7
+        mask = 1 << 7
         if not bytes_num:
             while byte & mask:
                 bytes_num += 1
