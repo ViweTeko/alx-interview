@@ -14,7 +14,7 @@ cache = {
 tot_size = 0
 counter = 0
 
-def prn_stats():
+def print_stats():
     """
     Function that print stats about log
     """
@@ -30,18 +30,18 @@ if __name__ == "__main__":
     try:
         for data in stdin:
             try:
-                fact = data.split(' ')
+                fact = data.split()
                 if fact[-2] in cache:
                     cache[fact[-2]] += 1
                 tot_size += int(fact[-1])
-            except:
-                pass
+            except (IndexError, ValueError):
+                continue
             counter += 1
             if counter == 10:
-                prn_stats()
+                print_stats()
                 counter = 0
     except KeyboardInterrupt:
-        prn_stats()
+        print_stats()
         raise
-    else:
-        prn_stats()
+    finally:
+        print_stats()
