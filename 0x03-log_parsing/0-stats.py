@@ -2,10 +2,12 @@
 """This script reads stdin line by line"""
 from sys import stdin
 
+
 cache = {
     '200': 0,
     '301': 0,
     '400': 0,
+    '401': 0,
     '403': 0,
     '404': 0,
     '405': 0,
@@ -14,34 +16,29 @@ cache = {
 tot_size = 0
 counter = 0
 
-def print_stats():
-    """
-    Function that print stats about log
-    """
-
-    print(f'File size: {tot_size}')
-    stcdor = sorted(cache.keys())
-    for each in stcdor:
-        if cache[each] > 0:
-            print(f'{each}: {cache[each]}')
-
-
-if __name__ == "__main__":
-    try:
-        for data in stdin:
-            try:
-                fact = data.split()
-                if fact[-2] in cache:
-                    cache[fact[-2]] += 1
-                tot_size += int(fact[-1])
-            except (IndexError, ValueError):
-                continue
+try:
+    for line in stdin:
+        line_list = line.split(" ")
+        if len(line_list) > 4:
+            code = line_list[-2]
+            size = int(line_list[-1])
+            if code in cache.keys():
+                cache[code] += 1
+            tot_size += size
             counter += 1
-            if counter == 10:
-                print_stats()
-                counter = 0
-    except KeyboardInterrupt:
-        print_stats()
-        raise
-    finally:
-        print_stats()
+
+        if counter == 10:
+            counter = 0
+            print(f'File size: {tot_size}')
+            for key, val in sorted(cache.items()):
+                if val != 0:
+                    print(f'{key}: {val}')
+
+except Exception as err:
+    pass
+
+finally:
+    print(f'File size: {tot_size}')
+    for key, val in sorted(cache.items()):
+        if val != 0:
+            print(f'{key}: {val}')
